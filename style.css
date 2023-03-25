@@ -36,3 +36,6 @@ form{
     width: max-content;
     padding: 10px;
 }
+form span{
+    color:red
+}

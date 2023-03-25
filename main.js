@@ -8,8 +8,12 @@ let kartyak;
 let tablazat;
 
 function init() {
-  rendezBarmiSzerint(KUTYALISTA,"kor",-1)/**kor szerint csökkenő sorrendbe rendez */
-  console.log(KUTYALISTA)
+  rendezBarmiSzerint(
+    KUTYALISTA,
+    "kor",
+    -1
+  ); /**kor szerint csökkenő sorrendbe rendez */
+  console.log(KUTYALISTA);
 
   ARTICLE = document.querySelector("article");
   kartyak = document.querySelector("section.kartyak");
@@ -47,7 +51,8 @@ function ujKutya() {
   const kutya = {};
   let szuka = document.querySelector("#szuka");
   let kan = document.querySelector("#kan");
-
+  let kuldheto = true;
+  let hibauzenet=""
   /**szedjük össze az űrlap adatait,
    * és tegyük bele egy objektumba
    * és fűzzük hozá a KUTYALISTA-hoz
@@ -59,28 +64,33 @@ function ujKutya() {
   kutya.kor = KorInputElem.value;
 
   const FajtaInputElem = document.querySelector("#kfajta");
-  kutya.fajta = FajtaInputElem.value;
 
-  let kutya2={
-    nev:NevInputElem.value,
-    kor:KorInputElem.value,
-    fajta:FajtaInputElem.value,
+  //itt is érdemes ellenőrizni, hogy megfelelő-e az adat:
+  var filter = /^[A-Z][a-zA-Z]{2,}$/;
+  if (filter.test(FajtaInputElem.value)) {
+    kutya.fajta = FajtaInputElem.value;
+    document.querySelector("#nevhiba").innerHTML=""
+  } else {
+    kuldheto = false;
+    hibauzenet="A név hiányzik, vagy a formátuma hibás!"
+    document.querySelector("#nevhiba").innerHTML=hibauzenet
   }
 
   const NemInputElem = document.querySelector("#szuka");
-  if (NemInputElem.checked ) {
+  if (NemInputElem.checked) {
     kutya.nem = "szuka";
   } else {
     kutya.nem = "kan";
   }
 
   console.log(kutya);
-
-  KUTYALISTA.push(kutya);
-  console.log(KUTYALISTA);
-  kartyak.innerHTML = osszeallit(KUTYALISTA);
-  tablazat.innerHTML = osszeallit2(KUTYALISTA);
-  torlesGomb();
+  if (kuldheto) {
+    KUTYALISTA.push(kutya);
+    console.log(KUTYALISTA);
+    kartyak.innerHTML = osszeallit(KUTYALISTA);
+    tablazat.innerHTML = osszeallit2(KUTYALISTA);
+    torlesGomb();
+  }
 }
 
 /* let index = 0;
