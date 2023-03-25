@@ -1,6 +1,11 @@
 import { KUTYALISTA, KUTYAKULCS } from "./adat.js";
 import { osszeallit, osszeallit2 } from "./adatkezeles.js";
 import { rendezBarmiSzerint } from "./rendezesSzures.js";
+// Ami az inportáláshoz kell: 
+// az index.html-ben a type="module" attributum használata
+// A importálandó függvény, vagy változó neve elé az export kuclsszó
+//majd ahova importáljuk, ott az alább látható módon. 
+//Figyelj a .js kiterjesztésre!
 window.addEventListener("load", init);
 
 let ARTICLE;
@@ -8,11 +13,7 @@ let kartyak;
 let tablazat;
 
 function init() {
-  rendezBarmiSzerint(
-    KUTYALISTA,
-    "kor",
-    -1
-  ); /**kor szerint csökkenő sorrendbe rendez */
+  rendezBarmiSzerint(KUTYALISTA,"kor",-1  ); /**kor szerint csökkenő sorrendbe rendez */
   console.log(KUTYALISTA);
 
   ARTICLE = document.querySelector("article");
@@ -70,6 +71,7 @@ function ujKutya() {
   if (filter.test(FajtaInputElem.value)) {
     kutya.fajta = FajtaInputElem.value;
     document.querySelector("#nevhiba").innerHTML=""
+    kuldheto = true;
   } else {
     kuldheto = false;
     hibauzenet="A név hiányzik, vagy a formátuma hibás!"
